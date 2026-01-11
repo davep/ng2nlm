@@ -26,6 +26,7 @@ PREAMBLE: Final[str] = """\
 2. Every entry is wrapped in 'BEGIN ENTRY: [entry-N]' and 'END ENTRY: [entry-N]' where N is a variable length number.
 3. Every entry will start with a markdown h1 header followed by a number. This relates to the [entry-N] in the point above and will have the same format.
 4. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
+5. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
 """
 
 
@@ -131,6 +132,10 @@ def as_markdown(entry: Short | Long) -> str:
             markdown += f"{str(ToMarkdown(line)).strip()}\n"
         else:
             markdown += f"[{str(ToMarkdown(line)).strip()}](#{entry_id(line)})\n"
+    if isinstance(entry, Long) and entry.has_see_also:
+        markdown += "\nSEE ALSO:"
+        for see_also in entry.see_also:
+            markdown += f" [{see_also.text}](#{entry_id(see_also)})"
     return markdown
 
 
