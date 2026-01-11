@@ -25,8 +25,9 @@ PREAMBLE: Final[str] = """\
 1. This file is a 'mega-source' containing an entire Norton Guide database file turned into a Markdown file.
 2. Every entry is wrapped in 'BEGIN ENTRY: [entry-N]' and 'END ENTRY: [entry-N]' where N is a variable length number.
 3. Every entry will start with a markdown h1 header followed by a number. This relates to the [entry-N] in the point above and will have the same format.
-4. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
-5. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
+4. Between `BEGIN MENUS` and `END MENUS` is a two-level bulleted list; this is the main menu for the guide. Use this for the overarching concepts of the guide.
+5. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
+6. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
 """
 
 
@@ -140,6 +141,21 @@ def as_markdown(entry: Short | Long) -> str:
 
 
 ##############################################################################
+def menus(guide: NortonGuide) -> str:
+    """Get the menus for the guide.
+
+    Returns:
+        The menus for the guide.
+    """
+    menus = "BEGIN MENUS\n\n"
+    for menu in guide.menus:
+        menus += f"* {menu.title}\n"
+        for prompt in menu:
+            menus += f"  * [{prompt.text}](#{entry_id(prompt)})\n"
+    return f"{menus}\nEND MENUS\n\n"
+
+
+##############################################################################
 def make_source(args: Namespace) -> None:
     """Make a source file for NotebookLM.
 
@@ -157,6 +173,8 @@ def make_source(args: Namespace) -> None:
         if extra_preamble:
             notebook_source.write(f"\n\n# ADDITIONAL RULES\n\n{extra_preamble}")
         notebook_source.write("\n\n---\n\n")
+        if guide.menu_count:
+            notebook_source.write(menus(guide))
         for entry in guide:
             notebook_source.write(f"BEGIN ENTRY: {entry_id(entry)}\n\n")
             notebook_source.write(content := as_markdown(entry))
