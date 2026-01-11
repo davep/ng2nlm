@@ -129,9 +129,9 @@ def as_markdown(entry: Short | Long) -> str:
     markdown = f"# {entry_id(entry)}\n\n"
     for line in entry:
         if isinstance(line, str) or not line.has_offset:
-            markdown += f"{str(ToMarkdown(line)).strip()}\n"
+            markdown += f"{ToMarkdown(line)}\n"
         else:
-            markdown += f"[{str(ToMarkdown(line)).strip()}](#{entry_id(line)})\n"
+            markdown += f"[{ToMarkdown(line)}](#{entry_id(line)})\n"
     if isinstance(entry, Long) and entry.has_see_also:
         markdown += "\nSEE ALSO:"
         for see_also in entry.see_also:
