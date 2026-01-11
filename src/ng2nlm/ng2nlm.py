@@ -1,4 +1,4 @@
-"""Main code."""
+"""A tool to turn a Norton Guide database into a source for NotebookLM."""
 
 ##############################################################################
 # Python imports.
