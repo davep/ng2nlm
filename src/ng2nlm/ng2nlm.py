@@ -26,8 +26,9 @@ PREAMBLE: Final[str] = """\
 2. Every entry is wrapped in 'BEGIN ENTRY: [entry-N]' and 'END ENTRY: [entry-N]' where N is a variable length number.
 3. Every entry will start with a markdown h1 header followed by a number. This relates to the [entry-N] in the point above and will have the same format.
 4. Between 'BEGIN MENUS' and 'END MENUS' is a two-level bulleted list; this is the main menu for the guide. Use this for the overarching concepts of the guide.
-5. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
-6. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
+5. Between `BEGIN CREDITS' and 'END CREDITS' are the credits for the guide. Consider this high-signal information for copyright and guide-wide details.
+6. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
+7. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
 """
 
 
@@ -175,6 +176,12 @@ def make_source(args: Namespace) -> None:
         notebook_source.write("\n\n---\n\n")
         if guide.menu_count:
             notebook_source.write(menus(guide))
+        if guide.credits:
+            notebook_source.write("\n\nBEGIN CREDITS\n\n")
+            notebook_source.write(
+                "\n".join(make_dos_like(credit).strip() for credit in guide.credits)
+            )
+            notebook_source.write("\nEND CREDITS\n\n")
         for entry in guide:
             notebook_source.write(f"BEGIN ENTRY: {entry_id(entry)}\n\n")
             notebook_source.write(content := as_markdown(entry))
