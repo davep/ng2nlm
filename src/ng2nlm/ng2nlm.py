@@ -163,35 +163,34 @@ def make_source(args: Namespace) -> None:
     Args:
         args: The command line arguments.
     """
-
-    guide = NortonGuide(args.guide)
-    source = resolve_source(args)
-    preamble = get_instructions(args.instructions) or PREAMBLE
-    extra_preamble = get_instructions(args.additional_instructions) or ""
-    estimated_word_count = len((preamble + extra_preamble).split())
-    with source.open("w", encoding="utf-8") as notebook_source:
-        notebook_source.write(preamble)
-        if extra_preamble:
-            notebook_source.write(f"\n\n# ADDITIONAL RULES\n\n{extra_preamble}")
-        notebook_source.write("\n\n---\n\n")
-        if guide.menu_count:
-            notebook_source.write(menus(guide))
-        if guide.credits:
-            notebook_source.write("\n\nBEGIN CREDITS\n\n")
-            notebook_source.write(
-                "\n".join(make_dos_like(credit).strip() for credit in guide.credits)
-            )
-            notebook_source.write("\nEND CREDITS\n\n")
-        for entry in guide:
-            notebook_source.write(f"BEGIN ENTRY: {entry_id(entry)}\n\n")
-            notebook_source.write(content := as_markdown(entry))
-            estimated_word_count += len(content.split())
-            notebook_source.write(f"\n\nEND ENTRY: {entry_id(entry)}\n\n")
-    print(f"Estimated word count: {estimated_word_count:,}")
-    if estimated_word_count > WORD_LIMIT:
-        print("NotebookLM will truncate this source!")
-    else:
-        print(f"{(estimated_word_count / WORD_LIMIT) * 100:.1f}% of the limit")
+    with NortonGuide(args.guide) as guide:
+        source = resolve_source(args)
+        preamble = get_instructions(args.instructions) or PREAMBLE
+        extra_preamble = get_instructions(args.additional_instructions) or ""
+        estimated_word_count = len((preamble + extra_preamble).split())
+        with source.open("w", encoding="utf-8") as notebook_source:
+            notebook_source.write(preamble)
+            if extra_preamble:
+                notebook_source.write(f"\n\n# ADDITIONAL RULES\n\n{extra_preamble}")
+            notebook_source.write("\n\n---\n\n")
+            if guide.menu_count:
+                notebook_source.write(menus(guide))
+            if guide.credits:
+                notebook_source.write("\n\nBEGIN CREDITS\n\n")
+                notebook_source.write(
+                    "\n".join(make_dos_like(credit).strip() for credit in guide.credits)
+                )
+                notebook_source.write("\nEND CREDITS\n\n")
+            for entry in guide:
+                notebook_source.write(f"BEGIN ENTRY: {entry_id(entry)}\n\n")
+                notebook_source.write(content := as_markdown(entry))
+                estimated_word_count += len(content.split())
+                notebook_source.write(f"\n\nEND ENTRY: {entry_id(entry)}\n\n")
+        print(f"Estimated word count: {estimated_word_count:,}")
+        if estimated_word_count > WORD_LIMIT:
+            print("NotebookLM will truncate this source!")
+        else:
+            print(f"{(estimated_word_count / WORD_LIMIT) * 100:.1f}% of the limit")
 
 
 ##############################################################################
