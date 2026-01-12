@@ -22,7 +22,7 @@ plugins:
 theme:
   name: material
   icon:
-    logo: fontawesome/solid/hexagon-nodes
+    logo: fontawesome/solid/life-ring
   features:
     - navigation.tabs
     - navigation.indexes
