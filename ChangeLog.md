@@ -1,8 +1,8 @@
 # ng2nlm ChangeLog
 
-## Unreleased
+## v1.0.0
 
-**Released: WiP**
+**Released: 2026-01-12**
 
 - Made see also and menu prompts "DOS like" in their encoding choice.
   ([#9](https://github.com/davep/ng2nlm/pull/9))

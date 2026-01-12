@@ -1,6 +1,6 @@
 [project]
 name = "ng2nlm"
-version = "0.0.1"
+version = "1.0.0"
 description = "Convert a Norton Guide database into a source for NotebookLM"
 authors = [
     { name = "Dave Pearson", email = "davep@davep.org" }
@@ -25,7 +25,7 @@ keywords = [
     "dbase",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
@@ -44,7 +44,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/davep/ng2nlm"
+Homepage = "https://ng2nlm.davep.dev/"
 Repository = "https://github.com/davep/ng2nlm"
 Documentation = "https://ng2nlm.davep.dev/"
 Source = "https://github.com/davep/ng2nlm"
