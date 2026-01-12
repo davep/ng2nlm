@@ -137,7 +137,7 @@ def as_markdown(entry: Short | Long) -> str:
     if isinstance(entry, Long) and entry.has_see_also:
         markdown += "\nSEE ALSO:"
         for see_also in entry.see_also:
-            markdown += f" [{see_also.text}](#{entry_id(see_also)})"
+            markdown += f" [{make_dos_like(see_also.text)}](#{entry_id(see_also)})"
     return markdown
 
 
@@ -150,9 +150,9 @@ def menus(guide: NortonGuide) -> str:
     """
     menus = "BEGIN MENUS\n\n"
     for menu in guide.menus:
-        menus += f"* {menu.title}\n"
+        menus += f"* {make_dos_like(menu.title)}\n"
         for prompt in menu:
-            menus += f"  * [{prompt.text}](#{entry_id(prompt)})\n"
+            menus += f"  * [{make_dos_like(prompt.text)}](#{entry_id(prompt)})\n"
     return f"{menus}\nEND MENUS\n\n"
 
 
