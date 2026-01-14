@@ -29,6 +29,7 @@ PREAMBLE: Final[str] = """\
 5. Between `BEGIN CREDITS' and 'END CREDITS' are the credits for the guide. Consider this high-signal information for copyright and guide-wide details.
 6. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
 7. If an entry has a 'SEE ALSO:' line take the Markdown links on that line to be related concepts to the current entry.
+8. When writing code example, do not include citation links in the code itself. Instead write all citations and provide all linked concepts as paragraphs of explanations after the code.
 """
 
 
