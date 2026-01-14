@@ -24,7 +24,7 @@ PREAMBLE: Final[str] = """\
 
 1. This file is a 'mega-source' containing an entire Norton Guide database file turned into a Markdown file.
 2. Every entry is wrapped in 'BEGIN ENTRY: [entry-N]' and 'END ENTRY: [entry-N]' where N is a variable length number.
-3. Every entry will start with a markdown h1 header followed by a number. This relates to the [entry-N] in the point above and will have the same format.
+3. Every entry will start with a markdown h1 header followed by a 'entry-N' identifier. This relates to the [entry-N] in the point above and will have the same format.
 4. Between 'BEGIN MENUS' and 'END MENUS' is a two-level bulleted list; this is the main menu for the guide. Use this for the overarching concepts of the guide.
 5. Between `BEGIN CREDITS' and 'END CREDITS' are the credits for the guide. Consider this high-signal information for copyright and guide-wide details.
 6. Linked concepts in the file will be in the normal Markdown link for of [this](#entry-N), where #entry-N is the id mentioned above.
