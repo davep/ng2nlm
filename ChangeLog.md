@@ -1,5 +1,12 @@
 # ng2nlm ChangeLog
 
+## Unreleased
+
+**Released: WiP**
+
+- Refined the instructions to the "AI".
+  ([#11](https://github.com/davep/ng2nlm/pull/11))
+
 ## v1.0.0
 
 **Released: 2026-01-12**
